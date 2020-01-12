@@ -5,6 +5,7 @@
   "description": "阿里招聘-demo",
   "author": "xiangshanxiumu",
   "license": "ISC",
+  "GitHub Pages":"https://xiangshanxiumu.github.io/ali-zhaopin-demo/",
   "main": "index.js",
   "scripts": {
     "start": "node ./build/dev.js",
