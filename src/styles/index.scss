@@ -1,0 +1,12 @@
+//test
+@import 'var.scss';
+.app{  
+  background: $blue;
+  font-size: 2rem;
+  text-align: center;
+  color:#fff;
+  .aps {
+    width: 60px;
+    @include ellipsis;
+  }
+}
