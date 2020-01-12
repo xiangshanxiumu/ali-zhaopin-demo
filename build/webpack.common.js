@@ -4,7 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 const webpack = require('webpack');
 const pkgJson = require('../package.json');
-const config = require('./config');
+const webpackConfig = require('./webpack.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -13,8 +13,8 @@ const tsImportPluginFactory = require('ts-import-plugin');
 const UUID = require('uuid');
 
 module.exports = (type) => {
-  const isDev = type === 'dev';
-  const isDist = type === 'dist';
+  const isDev = type === 'dev'; // dev 环境
+  const isBuild = type === 'dist'; // build 环境
   // css-loader
   const cssLoaders = [{
       loader: require.resolve('css-loader')
@@ -34,12 +34,7 @@ module.exports = (type) => {
       javascriptEnabled: true
     }
   }];
-  // sass-loader
-  const scssLoaders = [{
-    loader: require.resolve('sass-loader'),
-    options: {}
-  }]
-  // 压缩
+  // css压缩
   const miniCssLoader = {
     loader: MiniCssExtractPlugin.loader,
     options: {
@@ -51,8 +46,8 @@ module.exports = (type) => {
     mode: type === 'dev' ? 'development' : 'production',
     devtool: {
       dev: 'inline-source-map',
-      dll: false,
-      test: false,
+      // dll: false,
+      // test: false,
       dist: false
     } [type],
     resolve: {
@@ -62,28 +57,24 @@ module.exports = (type) => {
     entry: {
       [pkgJson.name]: _.compact([
         isDev && 'react-hot-loader/patch',
-        isDev && `webpack-hot-middleware/client?http://127.0.0.1:${config.port}`,
+        isDev && `webpack-hot-middleware/client?http://127.0.0.1:${webpackConfig.port}`,
         isDev && 'webpack/hot/only-dev-server',
         './src/index.tsx'
       ])
     },
     output: {
-      publicPath: isDist ? '' : '',
-      filename: isDist ?
+      publicPath: isBuild ? './' : '/',
+      filename: isBuild ?
         `bundle/${pkgJson.version}/[name].[hash:8].js` : `bundle/${pkgJson.version}/[name].js`,
-      chunkFilename: isDist ?
+      chunkFilename: isBuild ?
         `bundle/${pkgJson.version}/module.[name].[hash:8].js` : `bundle/${pkgJson.version}/module.[name].js`,
-      path: path.join(config.webpack.path.build),
-      library: 'someLibName',
-      libraryTarget: 'umd'
+      path: path.join(webpackConfig.webpack.path.build),
     },
     externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      axios: 'axios',
-      lodash: '_',
-      moment: 'moment',
-      '@antv/data-set': 'DataSet'
+      // react: 'React',
+      // 'react-dom': 'ReactDOM',
+      // axios: 'axios',
+      // lodash: '_',
     },
     optimization: {
       splitChunks: {
@@ -124,10 +115,11 @@ module.exports = (type) => {
       isDev && new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         title: pkgJson.title,
-        template: './src/template/index.html',
-        filename: 'index.html'
+        filename: 'index.html',
+        template: 'src/template/index.html',
+        inject: true
       }),
-      isDist &&
+      isBuild &&
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: {
           parser: require('postcss-safe-parser'),
@@ -136,17 +128,16 @@ module.exports = (type) => {
           }
         }
       }),
-      // isDist &&
       new MiniCssExtractPlugin({
         filename: `bundle/${pkgJson.version}/[name].css`,
         chunkFilename: `bundle/${pkgJson.version}/[name].[contenthash:12].css`
       }),
       new CopyWebpackPlugin([{
-          from: config.webpack.path.src + '/favicon.ico',
+          from: webpackConfig.webpack.path.src + '/favicon.ico',
           to: ''
         },
         {
-          from: config.webpack.path.src + '/assets/',
+          from: webpackConfig.webpack.path.src + '/assets/',
           to: 'assets/'
         }
       ]),
@@ -186,13 +177,9 @@ module.exports = (type) => {
           use: [miniCssLoader, ...cssLoaders, ...lessLoaders]
         },
         {
-          test: /\.scss$/,
-          use: [miniCssLoader, ...cssLoaders, ...scssLoaders]
-        },
-        {
           test: /\.(jpe?g|png|gif|svg)$/i,
           loaders: ['url-loader?limit=1&name=img/[name].min.[ext]'],
-          include: path.resolve(config.webpack.path.src)
+          include: path.resolve(webpackConfig.webpack.path.src)
         },
         {
           test: /\.(eot|ttf|woff)$/i,

@@ -1,21 +1,19 @@
 'use strict';
 
-const config = require('./config');
-
-const path = require('path');
 const webpack = require('webpack');
-const ProgressPlugin = require('webpack/lib/ProgressPlugin');
-const webpackConfig = require('./webpack-config')('dist');
 const shell = require('shelljs');
+const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const webpackConfig = require('./webpack.config');
+const webpackConfigCommon = require('./webpack.common')('dist');
 
-// 清除dist文件
-const buildFolder = config.webpack.path.pub;
+// 清除原旧的dist文件
+const buildFolder = webpackConfig.webpack.path.build;
 shell.rm('-rf', buildFolder);
 
 // Webpack build打包
 console.log('Building, it may take a few seconds...');
 console.time('✨ Done');
-const compiler = webpack(webpackConfig);
+const compiler = webpack(webpackConfigCommon);
 // 编译打包进度
 let lastPercentage = 0;
 compiler.apply(
@@ -28,7 +26,7 @@ compiler.apply(
     console.log(percentage + '%', msg);
   })
 );
-
+// err 输出
 compiler.run((err, res) => {
   if (err) {
     console.log(err);

@@ -1,7 +1,7 @@
 # ali-zhaopin-demo
-##  dev
+##  dev --mode
 ### yarn start
-## build
+## build --mode
 ### yarn build
 
 

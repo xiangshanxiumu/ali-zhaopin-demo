@@ -1,15 +1,17 @@
+'use strict';
+
 const express = require('express');
+const webpack = require('webpack');
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
-const getConfig = require('./webpack-config');
-const webpack = require('webpack');
-const config = require('./config');
+const webpackConfigCommon = require('./webpack.common');
+const webpackConfig = require('./webpack.config');
 // const proxy = require('http-proxy-middleware'); // 代理
-
+// dev 服务封装
 function startDevServer() {
   const app = express();
   /*webpack start*/
-  const devConfig = getConfig('dev');
+  const devConfig = webpackConfigCommon('dev');
   const compiler = webpack(devConfig);
   app.use(
     devMiddleware(compiler, {
@@ -18,7 +20,6 @@ function startDevServer() {
     })
   );
   app.use(hotMiddleware(compiler));
-
   // (() => {
   //   const proxy_options = {
   //     target: 'http://xxx/api:8080',
@@ -33,11 +34,12 @@ function startDevServer() {
   //   const webProxy = proxy(proxy_options);
   //   app.use('/api/*', webProxy);
   // })();
-  app.listen(config.port, (err) => {
+  app.listen(webpackConfig.port, (err) => {
     if (err) {
       console.error(err);
     }
-    console.log(`Dev server listening at http://localhost:${config.port}/`);
+    console.log(`Dev server listening at http://localhost:${webpackConfig.port}/`);
   });
 }
+// 启动dev服务
 startDevServer();
