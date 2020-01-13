@@ -5,23 +5,23 @@ import _ from 'lodash';
 
 interface NewJobsProps {
     classes;
-    data; // 数据
-    option?; // 配置
+    dataSource; // 滚动数据
+    option?; // 滚动配置
 }
 const styles:any = (theme) => {
     return {
         root: {
+            display:'block',
             width: '100%',
-            height: '100%',
+            height: '17.5rem',
             overflow: 'hidden',
             position: 'relative',
+            overflowY:'scroll',
         },
-        scrollBox: {
+        scroll: {
+            display:'block',
             width: '100%',
             height: 'auto',
-            position: 'absolute',
-            top: 0,
-            left: 0,
             padding:'0rem'
         },
         rowItem: {
@@ -59,30 +59,93 @@ const styles:any = (theme) => {
 class NewJobs extends React.Component<NewJobsProps, any>{
     constructor(props){
         super(props);
+        let {dataSource} =this.props;
         this.state={
-            option:{
-                axis:'Y', // x、Y 运动方向轴
-                direction:'',// 运动方向
+            data:dataSource?_.concat(_.cloneDeep(dataSource),dataSource):null,
+            defaultOption:{
+                // axis:'Y', // x、Y 运动方向轴
+                direction:'up',// 运动方向 up down、//left right
+                duration:50,// 运动时间快慢
             }
         }
     }
     timer; // 定时器
-    scrollBox; // 滚动盒子
+    scrollBox; // 滚动父盒子
+    scroll;//滚动盒子
     componentDidMount(){
+        //option 处理
+        this.optionHandle();
+        // 获取元素
+        this.scroll = document.getElementById('scroll');
+        this.scrollBox= document.getElementById('scrollBox');
+        this.move();
         // 滚动框宽高
-        const {clientWidth, clientHeight,offsetWidth,offsetHeight} = this.scrollBox;
-        console.log(clientWidth, clientHeight,offsetWidth,offsetHeight)
-        let {left,top,right,bottom} = this.scrollBox.getBoundingClientRect(); // 相对浏览器左上角位置
-        console.log(left,top,right,bottom)
+        // const {clientWidth, clientHeight,offsetWidth,offsetHeight,scrollTop} = this.scrollBox;
     }
-    move=(axis)=>{
-
+    componentWillUnmount(){
+        clearInterval(this.timer);
+    }
+    optionHandle = ()=>{
+        // 配置合并
+        let {defaultOption} = this.state;
+        let {option} = this.props;
+        if(option){
+            let newOption = Object.assign(defaultOption,option);
+            // direction
+            if(newOption.direction){
+                let arr = ['up','down']
+                if(!arr.includes(newOption.direction)){
+                    newOption.direction='up';
+                }
+            }
+            //duration
+            if(newOption.duration){
+                newOption.duration = Number(newOption.duration);
+                if(isNaN(newOption.duration)){
+                    newOption.duration=50;
+                }
+            }
+            this.setState({
+                defaultOption:newOption,
+            })
+        }
+    }
+    move=()=>{
+        let {defaultOption} = this.state;
+        clearInterval(this.timer);
+        this.timer=setInterval(()=>{
+            if(defaultOption.direction=='up'){
+                // this.scroll.offsetHeight - this.scrollBox.clientHeight
+                if(this.scrollBox.scrollTop>=this.scroll.offsetHeight/2){
+                    this.scrollBox.scrollTop = 0;
+                } else{
+                    this.scrollBox.scrollTop += 2;
+                }
+            } else if(defaultOption.direction=='down'){
+                if(this.scrollBox.scrollTop == 0){
+                    // this.scroll.offsetHeight - this.scrollBox.clientHeight
+                    this.scrollBox.scrollTop = this.scroll.offsetHeight/2;
+                } else{
+                    this.scrollBox.scrollTop -= 2;
+                }
+            }
+        },defaultOption.duration)
+    }
+    mouseEnterHandle(){
+        clearInterval(this.timer);
+    }
+    mouseLeaveHandle(){
+        this.move();
     }
     public render() {
-        let { classes, data } = this.props
+        let { classes } = this.props
+        let {data} = this.state;
+        console.log(data)
         return (
-            <div className={classes.root}>
-                <ul className={classes.scrollBox} ref={(ref)=>{this.scrollBox = ref}}>
+            <div className={classes.root} id="scrollBox" ref='scrollBox'
+              onMouseEnter={this.mouseEnterHandle.bind(this)}
+              onMouseLeave={this.mouseLeaveHandle.bind(this)}>
+                <ul className={classes.scroll} id="scroll" ref='scroll'>
                     {_.map(data, (item, index) => {
                         return <li className={classes.rowItem} key={index}>
                             <a href={item.href}>{item.title}</a>

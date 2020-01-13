@@ -176,7 +176,6 @@ class Home extends React.Component<HomeProps, any> {
   }
   public render() {
     let { classes,hotSearch,newJobs } = this.props
-    console.log("newJobs",newJobs)
     return (
       <div className={classes.root}>
         <div className={classes.content}>
@@ -209,7 +208,7 @@ class Home extends React.Component<HomeProps, any> {
                 <a href="https://job.alibaba.com/zhaopin/positionList.html?">更多</a>
               </div>
               {/*无缝滚动最新职位信息*/}
-              <NewJobs data={newJobs}/>
+              <NewJobs dataSource={newJobs}/>
             </div>
             <div className={classes.right}>
               <a href="https://www.aliyun.com/careers">
