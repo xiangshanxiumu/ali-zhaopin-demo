@@ -1,5 +1,47 @@
 export const home = {
     state:{
+        hotSearch:[
+            {
+                name:'JAVA',
+                path:''
+            },
+            {
+                name:'IOS',
+                path:''
+            },
+            {
+                name:'数据',
+                path:''
+            },
+            {
+                name:'安全',
+                path:''
+            },
+            {
+                name:'搜索',
+                path:''
+            },
+            {
+                name:'算法',
+                path:''
+            },
+            {
+                name:'运营',
+                path:''
+            },
+            {
+                name:'视觉',
+                path:''
+            },
+            {
+                name:'交互',
+                path:''
+            },
+            {
+                name:'前端',
+                path:''
+            },
+        ],
         newJobs:[]
     },
     reducers:{

@@ -12,7 +12,6 @@ const styles = (theme) => {
             height: '100%',
             minWidth:'50%',
             display: 'flex',
-
         },
         leftBox: {
             height: '100%',

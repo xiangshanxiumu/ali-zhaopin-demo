@@ -9,7 +9,10 @@ interface RoutesProps {
 }
 const styles = (theme) => {
   return {
-    root: {}
+    root: {
+      width:'100%',
+      height:'100%'
+    }
   };
 };
 // 首页home
