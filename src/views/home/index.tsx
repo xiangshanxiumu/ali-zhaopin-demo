@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import SearchBar from '../../components/searchBar';
 import Footer from '../../components/footer';
+import NewJobs from './NewJobs';
 import _ from 'lodash';
 import store from 'store';
 // import './index.scss'
@@ -95,9 +96,29 @@ const styles: any = (theme) => {
     },
     left: {
       flex:1,
+      paddingTop:'4rem',
       background: '#FFFFFF',
-        boxShadow: '0 0 15px 0 rgba(31,56,88,0.08)',
-        borderRadius: '3px',
+      boxShadow: '0 0 15px 0 rgba(31,56,88,0.08)',
+      borderRadius: '3px',
+      position: 'relative',
+    },
+    more:{
+      position:'absolute',
+      left:0,
+      top:0,
+      width:'100%',
+      height:'4rem',
+      padding:'0rem 1rem',
+      borderBottom:'1px solid rgba(31,56,88,0.06)',
+      display:'flex',
+      justifyContent:'space-between',
+      alignItems:'center',
+      fontSize:'1.2rem',
+      color:'#000',
+      '& a':{
+        color: 'rgba(31,56,88,0.60)',
+        textDecoration: 'none',
+      }
     },
     right: {
       fontFamily: 'PingFangSC-Regular',
@@ -154,8 +175,8 @@ class Home extends React.Component<HomeProps, any> {
     e.preventDefault();
   }
   public render() {
-    let { classes,hotSearch } = this.props
-    console.log("hotSearch",hotSearch)
+    let { classes,hotSearch,newJobs } = this.props
+    console.log("newJobs",newJobs)
     return (
       <div className={classes.root}>
         <div className={classes.content}>
@@ -183,7 +204,12 @@ class Home extends React.Component<HomeProps, any> {
           </div>
           <div className={classes.bottomBox}>
             <div className={classes.left}>
+              <div className={classes.more}>
+                <span>最新职位</span>
+                <a href="https://job.alibaba.com/zhaopin/positionList.html?">更多</a>
+              </div>
               {/*无缝滚动最新职位信息*/}
+              <NewJobs data={newJobs}/>
             </div>
             <div className={classes.right}>
               <a href="https://www.aliyun.com/careers">
