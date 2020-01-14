@@ -32,12 +32,12 @@ let CampusRecruitment = loadable({
 });
 // 了解阿里aboutAli
 let AboutAli = loadable({
-    loader: () => import(/* webpackChunkName: "aboutAli" */ '../views/AboutAli'),
+    loader: () => import(/* webpackChunkName: "aboutAli" */ '../views/aboutAli'),
     loading: LoadingComponent
 });
 // 个人中心 personalCenter
 let PersonalCenter = loadable({
-    loader: () => import(/* webpackChunkName: "personalCenter" */ '../views/PersonalCenter'),
+    loader: () => import(/* webpackChunkName: "personalCenter" */ '../views/personalCenter'),
     loading: LoadingComponent
 });
 const Routes: React.FunctionComponent<RoutesProps> = ({ match, classes }) => {

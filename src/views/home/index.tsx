@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import SearchBar from '../../components/searchBar';
 import Footer from '../../components/footer';
-import NewJobs from './NewJobs';
+import NewJobs from './newJobs';
 import _ from 'lodash';
 import store from 'store';
 // import './index.scss'
