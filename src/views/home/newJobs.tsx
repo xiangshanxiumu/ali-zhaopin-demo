@@ -140,7 +140,6 @@ class NewJobs extends React.Component<NewJobsProps, any>{
     public render() {
         let { classes } = this.props
         let {data} = this.state;
-        console.log(data)
         return (
             <div className={classes.root} id="scrollBox" ref='scrollBox'
               onMouseEnter={this.mouseEnterHandle.bind(this)}
