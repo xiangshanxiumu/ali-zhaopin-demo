@@ -180,7 +180,7 @@ class Home extends React.Component<HomeProps, any> {
       <div className={classes.root}>
         <div className={classes.content}>
           <div className={classes.topBox}>
-            <img src='{{site.baseurl}}/assets/images/home_bg.png' />
+            <img src='/assets/images/home_bg.png' />
             <div className={classes.mask}></div>
             <div className={classes.middleBox}>
               <div>
@@ -212,10 +212,10 @@ class Home extends React.Component<HomeProps, any> {
             </div>
             <div className={classes.right}>
               <a href="https://www.aliyun.com/careers">
-                <img src='{{site.baseurl}}/assets/images/ali_yun.png'/>
+                <img src='/assets/images/ali_yun.png'/>
               </a>
               <a href="https://job.alibaba.com/zhaopin/informationPlatformBu.htm?">
-                <img src='{{site.baseurl}}/assets/images/ali_ai.svg'/>
+                <img src='/assets/images/ali_ai.svg'/>
               </a>
             </div>
           </div>

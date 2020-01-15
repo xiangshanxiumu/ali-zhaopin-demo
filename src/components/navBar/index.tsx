@@ -91,7 +91,7 @@ class NavBar extends React.Component<NavBarProps, any> {
                 <div className={classes.leftBox}>
                     <div>
                         <a href="/">
-                            <img src="{{site.baseurl}}/assets/images/logo.png" />
+                            <img src="/assets/images/logo.png" />
                         </a>
                     </div>
                     <div className={classes.getter}>|</div>
