@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/styles';
 import classnames from 'classnames';
+import siteConfig from '../../siteConfig';
 import _ from 'lodash';
 interface NavBarProps {
     classes;
@@ -91,7 +92,7 @@ class NavBar extends React.Component<NavBarProps, any> {
                 <div className={classes.leftBox}>
                     <div>
                         <a href="/">
-                            <img src="/assets/images/logo.png" />
+                            <img src={`${siteConfig.baseUrl}/assets/images/logo.png`} />
                         </a>
                     </div>
                     <div className={classes.getter}>|</div>
