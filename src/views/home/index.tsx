@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import SearchBar from '../../components/searchBar';
 import Footer from '../../components/footer';
+import siteConfig from '../../siteConfig';
 import NewJobs from './newJobs';
 import _ from 'lodash';
 import store from 'store';
@@ -180,7 +181,7 @@ class Home extends React.Component<HomeProps, any> {
       <div className={classes.root}>
         <div className={classes.content}>
           <div className={classes.topBox}>
-            <img src='../../assets/images/home_bg.png' />
+            <img src={`./assets/images/home_bg.png`}/>
             <div className={classes.mask}></div>
             <div className={classes.middleBox}>
               <div>
@@ -212,10 +213,10 @@ class Home extends React.Component<HomeProps, any> {
             </div>
             <div className={classes.right}>
               <a href="https://www.aliyun.com/careers">
-                <img src='../../assets/images/ali_yun.png'/>
+                <img src='./assets/images/ali_yun.png'/>
               </a>
               <a href="https://job.alibaba.com/zhaopin/informationPlatformBu.htm?">
-                <img src='../../assets/images/ali_ai.svg'/>
+                <img src='./assets/images/ali_ai.svg'/>
               </a>
             </div>
           </div>
