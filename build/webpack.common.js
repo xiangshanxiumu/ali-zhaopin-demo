@@ -46,8 +46,6 @@ module.exports = (type) => {
     mode: type === 'dev' ? 'development' : 'production',
     devtool: {
       dev: 'inline-source-map',
-      // dll: false,
-      // test: false,
       dist: false
     } [type],
     resolve: {
@@ -135,6 +133,10 @@ module.exports = (type) => {
       new CopyWebpackPlugin([{
           from: webpackConfig.webpack.path.src + '/favicon.ico',
           to: ''
+        },
+        {
+          from: webpackConfig.webpack.path.src + '/lib/',
+          to:'lib/'
         },
         {
           from: webpackConfig.webpack.path.src + '/assets/',

@@ -181,7 +181,7 @@ class Home extends React.Component<HomeProps, any> {
       <div className={classes.root}>
         <div className={classes.content}>
           <div className={classes.topBox}>
-            <img src={`${siteConfig.baseUrl}/assets/images/home_bg.png`}/>
+            <img src={`./assets/images/home_bg.png`}/>
             <div className={classes.mask}></div>
             <div className={classes.middleBox}>
               <div>
